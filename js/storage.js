@@ -1,0 +1,3 @@
+import {empty,validate} from './rules.js';
+let db;export async function load(){db=await new Promise((resolve,reject)=>{const q=indexedDB.open('momentum-worklog',1);q.onupgradeneeded=()=>q.result.createObjectStore('state');q.onsuccess=()=>resolve(q.result);q.onerror=()=>reject(q.error)});return new Promise((resolve,reject)=>{const q=db.transaction('state').objectStore('state').get('main');q.onsuccess=()=>resolve(q.result?validate(q.result):empty());q.onerror=()=>reject(q.error)})}
+export async function save(s){return new Promise((resolve,reject)=>{const tx=db.transaction('state','readwrite');tx.objectStore('state').put(s,'main');tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error)})}
