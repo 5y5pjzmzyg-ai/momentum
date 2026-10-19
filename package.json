@@ -1,1 +1,1 @@
-{"type":"module","scripts":{"test":"node tests.mjs"}}
+{"type":"module","scripts":{"test":"node tests.mjs && node upgrade-tests.mjs"}}
